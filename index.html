@@ -3,54 +3,49 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>TRAP HELL: RETRO EDITION</title>
+<title>TRAP HELL: CRUNCHY RETRO</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:#050505;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;min-height:100vh;font-family:'Press Start 2P',monospace;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;}
 #wrap{position:relative;width:400px;max-width:100vw;box-shadow:0 0 30px rgba(255,34,0,0.2);}
-#hud{width:100%;display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:#0d0d11;border:3px solid #333344;border-bottom:none;color:#ff2200;font-size:8px;}
+#hud{width:100%;display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:#0d0d11;border:3px solid #333344;border-bottom:none;color:#ff2200;font-size:8px;}
 .canvas-container{position:relative;width:400px;max-width:100vw;}
 canvas{display:block;width:400px;max-width:100vw;image-rendering:pixelated;border:3px solid #333344;}
-/* CRT Scanline Effect */
-.canvas-container::after{content:"";position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(rgba(18,16,16,0) 50%,rgba(0,0,0,0.25) 50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06));background-size:100% 4px,6px 100%;pointer-events:none;z-index:10;}
-#ctrl{width:100%;display:flex;justify-content:space-between;align-items:center;padding:12px 10px;background:#0d0d11;border:3px solid #333344;border-top:none;}
-.dp{display:grid;grid-template-columns:46px 46px 46px;grid-template-rows:46px 46px;gap:4px;}
-.gb{background:#171722;border:2px solid #444455;color:#8888aa;font-size:16px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:4px;-webkit-tap-highlight-color:transparent;touch-action:none;box-shadow:inset 0 -3px 0 #222233;}
-.gb:active,.gb.on{background:#ff2200;color:#000;border-color:#ff6644;box-shadow:inset 0 2px 0 #880000;transform:translateY(2px);}
-.gl{grid-column:1;grid-row:2;}.gr{grid-column:3;grid-row:2;}.gu{grid-column:2;grid-row:1;}
-.jb{width:80px;height:80px;border-radius:50%;font-size:10px;background:#221111;border:3px solid #ff2200;color:#ff2200;font-family:'Press Start 2P',monospace;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;touch-action:none;box-shadow:0 4px 0 #990000, inset 0 -2px 0 #550000;}
-.jb:active,.jb.on{background:#ff2200;color:#000;box-shadow:0 1px 0 #550000;transform:translateY(3px);}
+.canvas-container::after{content:"";position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(rgba(18,16,16,0) 50%,rgba(0,0,0,0.2) 50%);background-size:100% 4px;pointer-events:none;z-index:10;}
+#ctrl{width:100%;display:flex;justify-content:space-between;align-items:center;padding:15px 10px;background:#0d0d11;border:3px solid #333344;border-top:none;}
+.dp{display:grid;grid-template-columns:50px 50px 50px;grid-template-rows:50px 50px;gap:6px;}
+.gb{background:#171722;border:2px solid #444455;color:#8888aa;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:6px;-webkit-tap-highlight-color:transparent;touch-action:none;box-shadow:inset 0 -4px 0 #222233;}
+.gb:active,.gb.on{background:#ff2200;color:#000;border-color:#ff6644;box-shadow:none;transform:translateY(4px);}
+.gl{grid-column:1;grid-row:2;}.gr{grid-column:3;grid-row:2;}
+.jb{width:86px;height:86px;border-radius:50%;font-size:11px;background:#221111;border:3px solid #ff2200;color:#ff2200;font-family:'Press Start 2P',monospace;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;touch-action:none;box-shadow:0 5px 0 #990000, inset 0 -2px 0 #550000;}
+.jb:active,.jb.on{background:#ff2200;color:#000;box-shadow:none;transform:translateY(5px);}
 #ov{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(5,5,10,0.96);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:20;}
-#ov h1{font-size:24px;color:#ff2200;text-shadow:0 0 15px #ff2200;margin-bottom:12px;text-align:center;letter-spacing:-1px;}
-#ov h2{font-size:8px;color:#ffcc00;margin-bottom:20px;text-align:center;line-height:2;}
-#ov p{font-size:7px;color:#888;margin-bottom:6px;text-align:center;}
-#ov .sb{margin-top:20px;padding:12px 24px;background:#ff2200;border:none;color:#000;font-family:'Press Start 2P',monospace;font-size:11px;cursor:pointer;animation:pu 0.8s infinite;}
-@keyframes pu{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
+#ov h1{font-size:24px;color:#ff2200;text-shadow:0 0 15px #ff2200;margin-bottom:12px;text-align:center;}
+#ov p{font-size:7px;color:#888;margin-bottom:6px;}
+#ov .sb{margin-top:20px;padding:12px 24px;background:#ff2200;border:none;color:#000;font-family:'Press Start 2P',monospace;font-size:11px;cursor:pointer;}
 #flash{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;opacity:0;z-index:15;background:#ff3300;}
 </style>
 </head>
 <body>
 <div id="wrap">
   <div id="hud">
-    <span style="color:#ff4444">MOTO ❤️<span id="ld">3</span></span>
+    <span style="color:#ff4444">❤️ INF</span>
     <span style="color:#ffcc00">STAGE <span id="lv">1</span></span>
     <span style="color:#ff2200">☠️ <span id="dd">0</span></span>
   </div>
   <div class="canvas-container">
-    <canvas id="c" width="400" height="460"></canvas>
+    <canvas id="c" width="400" height="440"></canvas>
     <div id="flash"></div>
     <div id="ov">
       <h1>TRAP<br>ADVENTURE</h1>
-      <h2>RETRO CHALLENGE</h2>
       <p>◄ ► MOVE &nbsp; ▲ JUMP</p>
-      <p>⚠️ EXPECT THE UNEXPECTED</p>
-      <button class="sb" id="sb">BEGIN</button>
+      <p>CRISPY MOBILE CONTROLS FIXED</p>
+      <button class="sb" id="sb">START</button>
     </div>
   </div>
   <div id="ctrl">
     <div class="dp">
-      <div class="gb gu" id="bu">▲</div>
       <div class="gb gl" id="bl">◄</div>
       <div class="gb gr" id="br">►</div>
     </div>
@@ -62,13 +57,13 @@ canvas{display:block;width:400px;max-width:100vw;image-rendering:pixelated;borde
 const CV = document.getElementById('c');
 const cx = CV.getContext('2d');
 cx.imageRendering = 'pixelated';
-const W = 400, H = 460, T = 32;
+const W = 400, H = 440, T = 32;
 
-// Strict Physics Tuning to mirror exact platformer metrics
-const GRAV = 0.55;
-const JUMP = -10.5;
-const MAXFALL = 10;
-const SPEED = 3.5;
+// Re-engineered tight 8-bit physics matrix
+const GRAV = 0.65;     // Heavy downward force to stop floaty jumping
+const JUMP = -11.5;    // Snap acceleration power
+const MAXFALL = 11;
+const SPEED = 4.0;     // Crisp running tempo
 
 const K = {l:0,r:0,j:0};
 document.addEventListener('keydown',e=>{
@@ -87,99 +82,86 @@ function mb(id,k){
   b.addEventListener('touchstart',e=>{K[k]=1;b.classList.add('on');e.preventDefault();},{passive:false});
   b.addEventListener('touchend',e=>{K[k]=0;b.classList.remove('on');e.preventDefault();},{passive:false});
 }
-mb('bl','l');mb('br','r');mb('bu','j');mb('bj','j');
+mb('bl','l');mb('br','r');mb('bj','j');
 
-// Character Config (Smooth retro proportions)
-const PW = 16, PH = 26;
-let P = {x:0,y:0,vx:0,vy:0,onGround:false,jHeld:false,dead:false,face:1,animTick:0,frame:0};
+const PW = 16, PH = 24;
+let P = {x:0,y:0,vx:0,vy:0,onGround:false,jHeld:false,dead:false,face:1,animTick:0};
 
 let CAM = {y:0};
-let PARTS = [];
 let shk = 0;
 let GS = {lvl:1,deaths:0,playing:false};
-let LD = null, LO = [], cpActive=false, cpPos={x:0,y:0};
+let LD = null, LO = [];
 
 function mkRng(seed) {
   let s = seed;
   return () => { s = (s * 1664525 + 1013904223) & 0xffffffff; return (s >>> 0) / 0xffffffff; };
 }
 
-// ══════════════════════════════════════════════════════
-// LEVEL GENERATOR: NO DEAD-ENDS + PSYCHOLOGICAL TRAPS
-// ══════════════════════════════════════════════════════
 function buildLevel(n) {
-  const rng = mkRng(n * 53 + 21);
-  const vTiles = 30; 
+  const rng = mkRng(n * 57 + 13);
+  const vTiles = 26; 
   const worldH = vTiles * T;
   const objs = [];
 
-  // Solid room foundation borders
+  // Solid layout map framing boundaries
   objs.push({type:'solid', x:0, y:worldH-T, w:W, h:T});
   objs.push({type:'solid', x:-T, y:0, w:T, h:worldH});
   objs.push({type:'solid', x:W, y:0, w:T, h:worldH});
 
-  // Level 3 & General Generation Protection Path Routine
-  let curX = 40;
+  let curX = 32;
   let curY = worldH - T * 3;
   const path = [{x: curX, y: curY, w: 96}];
 
-  // Construct first baseline safety deck platform
   objs.push({type:'solid', x: curX, y: curY, w: 96, h: T});
 
-  while(curY > T * 4) {
-    // Exact mathematical verification of physical horizontal/vertical reaching capacity
-    let jumpUpCells = 2 + Math.floor(rng() * 2); // Max 3 tiles high upward movement
-    let jumpAcrossCells = 2 + Math.floor(rng() * 2); // Max 3 tiles wide horizontal displacement
+  while(curY > T * 3) {
+    let jumpUpCells = 2; // Fixed predictable height steps to eliminate blind targets
+    let jumpAcrossCells = 2 + Math.floor(rng() * 2); 
     
-    let direction = (curX > W - 150) ? -1 : (curX < 80) ? 1 : (rng() < 0.5 ? -1 : 1);
+    let direction = (curX > W - 160) ? -1 : (curX < 64) ? 1 : (rng() < 0.5 ? -1 : 1);
     
     curY -= (jumpUpCells * T);
     curX += direction * (jumpAcrossCells * T);
 
     if(curX < 32) curX = 32;
-    if(curX > W - 96) curX = W - 128;
+    if(curX > W - 128) curX = W - 128;
 
-    let pWidth = 64 + Math.floor(rng() * 2) * 32;
+    let pWidth = 96; // Ensured minimum stable platform space dimension 
     path.push({x: curX, y: curY, w: pWidth});
     objs.push({type:'solid', x: curX, y: curY, w: pWidth, h: T});
     
-    // 💀 PURE TRAP ADVENTURE TRAPS INSERTION:
+    // Core Troll Traps layout architecture
     if(path.length > 1) {
       let trapRoll = rng();
-      
-      // TRAP 1: The Deceptive Runway (Platform slides back when you jump to it)
-      if(trapRoll < 0.3) {
+      if(trapRoll < 0.35) {
+        // Shifting trick platform
         objs.push({
           type: 'deceptive_platform',
           x: curX, y: curY, w: pWidth, h: T,
-          targetX: curX + (direction * 48),
-          triggered: false,
-          origX: curX
+          targetX: curX + (direction * 40),
+          triggered: false
         });
-        // Remove the static platform we just pushed to let the trap handle it
-        objs.pop();
-      }
-      // TRAP 2: Hidden Ceiling Spikes (Pop out when jumping over open air)
-      else if(trapRoll < 0.55 && curY < worldH - 200) {
+        objs.pop(); // Override static setup element replacement
+      } else if(trapRoll < 0.65) {
+        // Sudden drop overhead spike deployment trap
         objs.push({
           type: 'ceiling_spike',
-          x: curX + (pWidth/2) - 16,
-          y: curY - 90,
+          x: curX + 32,
+          y: curY - 80,
           w: 32, h: 16,
-          triggered: false,
-          targetY: curY - 48
+          triggered: false
         });
       }
     }
   }
 
-  // TRAP 3: The Fake Troll Checkpoint (Spawns spikes underneath you if approached normally)
+  // Safe visual asset flag structure identifier
   let midPlatform = path[Math.floor(path.length / 2)];
   objs.push({
     type: 'fake_checkpoint',
-    x: midPlatform.x + 16,
-    y: midPlatform.y - 32,
-    w: 16, h: 32,
+    x: midPlatform.x + 32,
+    y: midPlatform.y - 24,
+    w: 12, h: 24,
     triggered: false
   });
 
@@ -188,8 +170,8 @@ function buildLevel(n) {
 
   return {
     worldH: worldH,
-    spawn: { x: startNode.x + 16, y: startNode.y - PH - 10 },
-    exit: { x: endNode.x + 20, y: endNode.y - 32 },
+    spawn: { x: startNode.x + 16, y: startNode.y - PH - 4 },
+    exit: { x: endNode.x + 32, y: endNode.y - 32 },
     objects: objs
   };
 }
@@ -197,12 +179,7 @@ function buildLevel(n) {
 function loadLevel(n, fromCp=false){
   LD = buildLevel(n);
   LO = LD.objects.map(o=>({...o}));
-  if(fromCp && cpActive){
-    resetP(cpPos.x, cpPos.y);
-  } else {
-    cpActive = false;
-    resetP(LD.spawn.x, LD.spawn.y);
-  }
+  resetP(LD.spawn.x, LD.spawn.y);
   CAM.y = Math.max(0, Math.min(LD.worldH - H, P.y - H / 2));
   document.getElementById('lv').innerText = GS.lvl;
   document.getElementById('dd').innerText = GS.deaths;
@@ -220,9 +197,10 @@ function hits(ax,ay,aw,ah,bx,by,bw,bh){
 function updateP(){
   if(P.dead) return;
 
+  // Sharp Instant Digital Stopping logic (No sliding friction bugs)
   if(K.l){ P.vx = -SPEED; P.face = -1; P.animTick++; }
   else if(K.r){ P.vx = SPEED; P.face = 1; P.animTick++; }
-  else { P.vx *= 0.65; P.animTick = 0; }
+  else { P.vx = 0; P.animTick = 0; }
 
   if(!P.onGround) P.vy += GRAV;
   if(P.vy > MAXFALL) P.vy = MAXFALL;
@@ -234,7 +212,6 @@ function updateP(){
   }
   if(!K.j) P.jHeld = false;
 
-  // X movement and bounds
   P.x += P.vx;
   if(P.x < 0) P.x = 0; if(P.x + PW > W) P.x = W - PW;
 
@@ -251,7 +228,6 @@ function updateP(){
     }
   }
 
-  // Y movement and bounds
   P.y += P.vy;
   P.onGround = false;
 
@@ -276,32 +252,27 @@ function updateP(){
 
 function updateTraps(){
   for(let o of LO){
-    // Trigger Deceptive Platform slide logic when jumping towards it
     if(o.type === 'deceptive_platform'){
-      if(!o.triggered && Math.abs(P.y - o.y) < 96 && Math.abs(P.x - o.x) < 80 && !P.onGround){
+      if(!o.triggered && Math.abs(P.y - o.y) < 80 && Math.abs(P.x - o.x) < 64 && !P.onGround){
         o.triggered = true;
       }
       if(o.triggered) {
-        o.x += (o.targetX - o.x) * 0.12;
+        o.x += (o.targetX - o.x) * 0.2; // Rapid sudden trick shift response matrix
       }
     }
-    // Drop Hidden Ceiling Spikes down onto player head
     if(o.type === 'ceiling_spike'){
-      if(!o.triggered && Math.abs(P.x - o.x) < 48 && P.y > o.y && P.y < o.y + 120){
+      if(!o.triggered && Math.abs(P.x - o.x) < 32 && P.y > o.y && P.y < o.y + 100){
         o.triggered = true;
       }
       if(o.triggered){
-        o.y += 6; 
+        o.y += 7; 
       }
     }
-    // Fake Checkpoint Trap Logic
     if(o.type === 'fake_checkpoint'){
-      if(!o.triggered && hits(P.x, P.y, PW, PH, o.x - 10, o.y, o.w + 20, o.h)){
+      if(!o.triggered && hits(P.x, P.y, PW, PH, o.x - 4, o.y, o.w + 8, o.h)){
         o.triggered = true;
-        // Transform into sudden floor spike spikes
         o.type = 'spike_up';
-        o.y -= 4;
-        o.h += 8;
+        o.y -= 4; o.h += 8;
         die();
       }
     }
@@ -313,8 +284,7 @@ function checkHazards(){
   for(let o of LO){
     if(o.type === 'ceiling_spike' || o.type === 'spike_up'){
       if(hits(P.x, P.y, PW, PH, o.x, o.y, o.w, o.h)){
-        die();
-        return;
+        die(); return;
       }
     }
   }
@@ -323,7 +293,7 @@ function checkHazards(){
 function checkGoals(){
   if(P.dead) return;
   let ex = LD.exit;
-  if(hits(P.x, P.y, PW, PH, ex.x, ex.y, 24, 32)){
+  if(hits(P.x, P.y, PW, PH, ex.x, ex.y, 24, 24)){
     GS.lvl++;
     loadLevel(GS.lvl);
   }
@@ -333,80 +303,57 @@ function die(){
   if(P.dead) return;
   P.dead = true;
   GS.deaths++;
-  shk = 12;
-  document.getElementById('flash').style.opacity = 0.8;
-  setTimeout(() => document.getElementById('flash').style.opacity = 0, 80);
-  setTimeout(() => { loadLevel(GS.lvl, false); }, 500);
+  shk = 10;
+  document.getElementById('flash').style.opacity = 0.7;
+  setTimeout(() => document.getElementById('flash').style.opacity = 0, 60);
+  setTimeout(() => { loadLevel(GS.lvl, false); }, 400);
 }
 
 function updateCamera(){
-  let targetY = P.y - H * 0.6;
-  CAM.y += (targetY - CAM.y) * 0.1;
+  let targetY = P.y - H * 0.55;
+  CAM.y += (targetY - CAM.y) * 0.15;
   CAM.y = Math.max(0, Math.min(LD.worldH - H, CAM.y));
 }
 
-// ══════════════════════════════════════════════════════
-// RETRO PIXEL ENGINE GRAPHICS PAINT ROUTINES
-// ══════════════════════════════════════════════════════
 function drawPlayer(rx, ry) {
-  cx.fillStyle = "#ffffff"; // Skin/Face/Body Base color
+  cx.fillStyle = "#ffffff"; 
+  cx.fillRect(rx + 2, ry, 12, 8); // Head mapping coordinates
+  cx.fillStyle = "#000";
+  cx.fillRect(P.face === 1 ? rx + 10 : rx + 4, ry + 2, 2, 2); // Eye tracking points
   
-  // Head Block
-  cx.fillRect(rx + 3, ry, 10, 8);
-  // Eyes Detail
-  cx.fillStyle = "#000000";
-  if(P.face === 1) {
-    cx.fillRect(rx + 9, ry + 2, 2, 2);
-  } else {
-    cx.fillRect(rx + 5, ry + 2, 2, 2);
-  }
-
-  // Torso / Shirt Outfit
-  cx.fillStyle = "#3366ff";
-  cx.fillRect(rx + 2, ry + 8, 12, 10);
-
-  // Animated Pixel Legs Architecture Running
-  cx.fillStyle = "#ffcc00";
-  let legFrame = Math.floor(P.animTick / 5) % 2;
-  if(P.onGround && K.l || K.r) {
-    if(legFrame === 0) {
-      cx.fillRect(rx + 2, ry + 18, 4, 8);  // Left Extended Leg Step
-      cx.fillRect(rx + 10, ry + 18, 4, 6); // Right Leg back
+  cx.fillStyle = "#ff2200"; 
+  cx.fillRect(rx, ry + 8, 16, 10); // Torso coat
+  
+  cx.fillStyle = "#ffffff"; 
+  let legF = Math.floor(P.animTick / 4) % 2;
+  if(!P.onGround) {
+    cx.fillRect(rx + 1, ry + 18, 4, 4); cx.fillRect(rx + 11, ry + 18, 4, 6);
+  } else if(P.vx !== 0) {
+    if(legF === 0) {
+      cx.fillRect(rx + 1, ry + 18, 4, 6); cx.fillRect(rx + 11, ry + 18, 4, 4);
     } else {
-      cx.fillRect(rx + 2, ry + 18, 4, 6);
-      cx.fillRect(rx + 10, ry + 18, 4, 8);
+      cx.fillRect(rx + 1, ry + 18, 4, 4); cx.fillRect(rx + 11, ry + 18, 4, 6);
     }
   } else {
-    // Standing or Floating Mid-Air pose
-    cx.fillRect(rx + 3, ry + 18, 4, 8);
-    cx.fillRect(rx + 9, ry + 18, 4, 8);
+    cx.fillRect(rx + 2, ry + 18, 4, 6); cx.fillRect(rx + 10, ry + 18, 4, 6);
   }
 }
 
 function draw(){
   cx.clearRect(0,0,W,H);
   cx.save();
-  if(shk > 0){
-    shk--;
-    cx.translate((Math.random()-0.5)*6, (Math.random()-0.5)*6);
-  }
+  if(shk > 0){ shk--; cx.translate((Math.random()-0.5)*4, (Math.random()-0.5)*4); }
 
-  // Deep Retro Palette Dark Backdrop Space
-  cx.fillStyle = "#0a0a10";
+  cx.fillStyle = "#09090e";
   cx.fillRect(0, 0, W, H);
 
-  // Render Layout Elements
   for(let o of LO){
     let rx = o.x;
     let ry = o.y - CAM.y;
     
     if(o.type === 'solid' || o.type === 'deceptive_platform'){
-      // Classic 8-bit bricks texture mapping loop
-      cx.fillStyle = '#222233';
-      cx.fillRect(rx, ry, o.w, o.h);
-      cx.strokeStyle = '#444455';
-      cx.lineWidth = 2;
-      cx.strokeRect(rx, ry, o.w, o.h);
+      cx.fillStyle = '#1c1c28'; cx.fillRect(rx, ry, o.w, o.h);
+      cx.strokeStyle = '#3a3a4c'; cx.lineWidth = 2; cx.strokeRect(rx, ry, o.w, o.h);
     } 
     else if(o.type === 'ceiling_spike' || o.type === 'spike_up'){
       cx.fillStyle = '#ff3300';
@@ -419,25 +366,14 @@ function draw(){
       cx.fill();
     }
     else if(o.type === 'fake_checkpoint') {
-      // Looks like a real emerald green checkpoint pole flag
-      cx.fillStyle = '#00ff66';
-      cx.fillRect(rx, ry, o.w, o.h);
+      cx.fillStyle = '#00ff66'; cx.fillRect(rx, ry, o.w, o.h);
     }
   }
 
-  // Golden Level Gateway Exit Portal Flag
-  let exrx = LD.exit.x;
-  let exry = LD.exit.y - CAM.y;
-  cx.fillStyle = '#ffcc00';
-  cx.fillRect(exrx, exry, 24, 32);
-  cx.fillStyle = '#ffffff';
-  cx.font = '8px "Press Start 2P"';
-  cx.fillText("EXIT", exrx - 4, exry - 8);
+  let exrx = LD.exit.x; let exry = LD.exit.y - CAM.y;
+  cx.fillStyle = '#ffcc00'; cx.fillRect(exrx, exry, 24, 24);
 
-  // Character Painting Execution
-  if(!P.dead){
-    drawPlayer(P.x, P.y - CAM.y);
-  }
+  if(!P.dead) drawPlayer(P.x, P.y - CAM.y);
 
   cx.restore();
 }
