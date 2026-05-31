@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>TRAP HELL: CRUNCHY RETRO</title>
+<title>TRAP HELL: BALANCED RETRO</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -30,7 +30,7 @@ canvas{display:block;width:400px;max-width:100vw;image-rendering:pixelated;borde
 <body>
 <div id="wrap">
   <div id="hud">
-    <span style="color:#ff4444">❤️ INF</span>
+    <span style="color:#ff4444">❤️ MOTO</span>
     <span style="color:#ffcc00">STAGE <span id="lv">1</span></span>
     <span style="color:#ff2200">☠️ <span id="dd">0</span></span>
   </div>
@@ -40,7 +40,7 @@ canvas{display:block;width:400px;max-width:100vw;image-rendering:pixelated;borde
     <div id="ov">
       <h1>TRAP<br>ADVENTURE</h1>
       <p>◄ ► MOVE &nbsp; ▲ JUMP</p>
-      <p>CRISPY MOBILE CONTROLS FIXED</p>
+      <p>SPEED REDUCED & TRAPS BALANCED</p>
       <button class="sb" id="sb">START</button>
     </div>
   </div>
@@ -59,11 +59,11 @@ const cx = CV.getContext('2d');
 cx.imageRendering = 'pixelated';
 const W = 400, H = 440, T = 32;
 
-// Re-engineered tight 8-bit physics matrix
-const GRAV = 0.65;     // Heavy downward force to stop floaty jumping
-const JUMP = -11.5;    // Snap acceleration power
+// Tightly calibrated responsive physics metrics
+const GRAV = 0.65;     
+const JUMP = -11.2;    
 const MAXFALL = 11;
-const SPEED = 4.0;     // Crisp running tempo
+const SPEED = 2.8;     // Reduced speed for precise navigation controls
 
 const K = {l:0,r:0,j:0};
 document.addEventListener('keydown',e=>{
@@ -103,7 +103,6 @@ function buildLevel(n) {
   const worldH = vTiles * T;
   const objs = [];
 
-  // Solid layout map framing boundaries
   objs.push({type:'solid', x:0, y:worldH-T, w:W, h:T});
   objs.push({type:'solid', x:-T, y:0, w:T, h:worldH});
   objs.push({type:'solid', x:W, y:0, w:T, h:worldH});
@@ -115,7 +114,7 @@ function buildLevel(n) {
   objs.push({type:'solid', x: curX, y: curY, w: 96, h: T});
 
   while(curY > T * 3) {
-    let jumpUpCells = 2; // Fixed predictable height steps to eliminate blind targets
+    let jumpUpCells = 2; 
     let jumpAcrossCells = 2 + Math.floor(rng() * 2); 
     
     let direction = (curX > W - 160) ? -1 : (curX < 64) ? 1 : (rng() < 0.5 ? -1 : 1);
@@ -126,40 +125,38 @@ function buildLevel(n) {
     if(curX < 32) curX = 32;
     if(curX > W - 128) curX = W - 128;
 
-    let pWidth = 96; // Ensured minimum stable platform space dimension 
+    let pWidth = 96; // Generous platform sizing
     path.push({x: curX, y: curY, w: pWidth});
     objs.push({type:'solid', x: curX, y: curY, w: pWidth, h: T});
     
-    // Core Troll Traps layout architecture
     if(path.length > 1) {
       let trapRoll = rng();
-      if(trapRoll < 0.35) {
-        // Shifting trick platform
+      if(trapRoll < 0.3) {
+        // Shifting platform trap
         objs.push({
           type: 'deceptive_platform',
           x: curX, y: curY, w: pWidth, h: T,
-          targetX: curX + (direction * 40),
+          targetX: curX + (direction * 32), // Slower, shorter shifting offset distance
           triggered: false
         });
-        objs.pop(); // Override static setup element replacement
-      } else if(trapRoll < 0.65) {
-        // Sudden drop overhead spike deployment trap
+        objs.pop(); 
+      } else if(trapRoll < 0.55) {
+        // Balanced Ceiling Spikes (Narrower spike bounding area, easier to bait or escape)
         objs.push({
           type: 'ceiling_spike',
-          x: curX + 32,
-          y: curY - 80,
-          w: 32, h: 16,
+          x: curX + 36,
+          y: curY - 84,
+          w: 24, h: 16,
           triggered: false
         });
       }
     }
   }
 
-  // Safe visual asset flag structure identifier
   let midPlatform = path[Math.floor(path.length / 2)];
   objs.push({
     type: 'fake_checkpoint',
-    x: midPlatform.x + 32,
+    x: midPlatform.x + 42,
     y: midPlatform.y - 24,
     w: 12, h: 24,
     triggered: false
@@ -197,7 +194,6 @@ function hits(ax,ay,aw,ah,bx,by,bw,bh){
 function updateP(){
   if(P.dead) return;
 
-  // Sharp Instant Digital Stopping logic (No sliding friction bugs)
   if(K.l){ P.vx = -SPEED; P.face = -1; P.animTick++; }
   else if(K.r){ P.vx = SPEED; P.face = 1; P.animTick++; }
   else { P.vx = 0; P.animTick = 0; }
@@ -253,23 +249,24 @@ function updateP(){
 function updateTraps(){
   for(let o of LO){
     if(o.type === 'deceptive_platform'){
-      if(!o.triggered && Math.abs(P.y - o.y) < 80 && Math.abs(P.x - o.x) < 64 && !P.onGround){
+      if(!o.triggered && Math.abs(P.y - o.y) < 64 && Math.abs(P.x - o.x) < 48 && !P.onGround){
         o.triggered = true;
       }
       if(o.triggered) {
-        o.x += (o.targetX - o.x) * 0.2; // Rapid sudden trick shift response matrix
+        o.x += (o.targetX - o.x) * 0.1; // Smooth, manageable platform movement speed
       }
     }
     if(o.type === 'ceiling_spike'){
-      if(!o.triggered && Math.abs(P.x - o.x) < 32 && P.y > o.y && P.y < o.y + 100){
+      // Smaller precise horizontal window to drop, gives you room to jump past it safely
+      if(!o.triggered && Math.abs(P.x - o.x) < 20 && P.y > o.y && P.y < o.y + 100){
         o.triggered = true;
       }
       if(o.triggered){
-        o.y += 7; 
+        o.y += 3.5; // Significantly cut dropping velocity down for reactiveness
       }
     }
     if(o.type === 'fake_checkpoint'){
-      if(!o.triggered && hits(P.x, P.y, PW, PH, o.x - 4, o.y, o.w + 8, o.h)){
+      if(!o.triggered && hits(P.x, P.y, PW, PH, o.x - 2, o.y, o.w + 4, o.h)){
         o.triggered = true;
         o.type = 'spike_up';
         o.y -= 4; o.h += 8;
@@ -317,15 +314,15 @@ function updateCamera(){
 
 function drawPlayer(rx, ry) {
   cx.fillStyle = "#ffffff"; 
-  cx.fillRect(rx + 2, ry, 12, 8); // Head mapping coordinates
+  cx.fillRect(rx + 2, ry, 12, 8); 
   cx.fillStyle = "#000";
-  cx.fillRect(P.face === 1 ? rx + 10 : rx + 4, ry + 2, 2, 2); // Eye tracking points
+  cx.fillRect(P.face === 1 ? rx + 10 : rx + 4, ry + 2, 2, 2); 
   
   cx.fillStyle = "#ff2200"; 
-  cx.fillRect(rx, ry + 8, 16, 10); // Torso coat
+  cx.fillRect(rx, ry + 8, 16, 10); 
   
   cx.fillStyle = "#ffffff"; 
-  let legF = Math.floor(P.animTick / 4) % 2;
+  let legF = Math.floor(P.animTick / 5) % 2;
   if(!P.onGround) {
     cx.fillRect(rx + 1, ry + 18, 4, 4); cx.fillRect(rx + 11, ry + 18, 4, 6);
   } else if(P.vx !== 0) {
